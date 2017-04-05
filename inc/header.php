@@ -1,6 +1,9 @@
 <?php
-session_name ( 'p1_group15' );
-session_start();
+
+	if(!isset($config)){ 
+		require_once dirname(__FILE__) . "/../lib/config.php";
+	} 
+
 date_default_timezone_set ( 'America/Denver' );
 
 	if(!isset($_SESSION['sessionUser'])){
@@ -21,7 +24,7 @@ date_default_timezone_set ( 'America/Denver' );
 
 	<title><?php echo "IFY  |  " . $pgTitle; ?></title>
 
-	<meta name="author" content="Dylan Crescibene and Brendon Powley" >
+	<meta name="author" content=" Brendon Powley" >
 	<meta name="description" content="CT310 P1: Team 15">
 	<meta name="keywords" content="Dylan,Crescibene,Brendon,Powley,CSU,CT310,Colostate">
 
@@ -30,8 +33,8 @@ date_default_timezone_set ( 'America/Denver' );
 
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
 	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
-
-	<link rel="stylesheet" href="style.css" type="text/css"/>
+	
+	<link rel="stylesheet" href="<?php echo $config->base_url;?>/assets/css/style.css" type="text/css"/>
 	<link href='//fonts.googleapis.com/css?family=Alegreya+Sans+SC' rel='stylesheet'>
 
 	<script type="text/javascript"> 
