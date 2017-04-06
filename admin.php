@@ -18,6 +18,8 @@ include ('inc/header.php');
 	<p>
 		Probably things like add/update ingredient, edit comment, delete comments, etc.<br>
 		Need to make sure this page is only accessible when a user with admin permissions is logged in.
+		<li><a href="./addIngredient.php">Add an Ingredient</a></li>
+		<li><a href="./createDB.php">Create Default Database</a></li>
 	</p>
 </div>
 
