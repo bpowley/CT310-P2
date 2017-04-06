@@ -14,7 +14,6 @@ class User {
   }
 
   // add any necessary functions to support User
-
 }
 
 ?>

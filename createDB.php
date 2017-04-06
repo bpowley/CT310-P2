@@ -97,6 +97,7 @@ function createTableUsers(){
 					id INTEGER PRIMARY KEY ASC,
 					username varchar (15),
 					password varchar (50),
+					email varchar(50),
 					role int(2))";
 	createTableGeneric($sql);
 }
@@ -154,15 +155,15 @@ function testedIngredientInsert($id, $ing_name, $img_name, $desc){
 }
 
 function addDefaultUsers(){
-	testedUserInsert(1, "bpowley", "password",1);
-	testedUserInsert(2, "bmertz", "password", 1);
-	testedUserInsert(3, "ct310", "password", 0);
+	testedUserInsert(1, "bpowley", "password","brendon.powley@gmail.com",1);
+	testedUserInsert(2, "benmertz", "password","bn.mertz@gmail.com", 1);
+	testedUserInsert(3, "ct310", "password", "ct310@cs.colostate.edu", 0);
 }
 
-function testedUserInsert($id, $username, $password, $role){
+function testedUserInsert($id, $username, $password, $mail, $role){
 	global $dbh; 
 	$hash = password_hash($password);
-	$sql = "INSERT INTO users(id, username, password, role) VALUES ( '$id', '$username', '$hash', '$role')";
+	$sql = "INSERT INTO users(id, username, password, email, role) VALUES ( '$id', '$username', '$hash', '$mail', '$role')";
 	$status = $dbh->exec($sql);
 	if($status === FALSE){
 		echo '<pre class="bg-danger">';	
