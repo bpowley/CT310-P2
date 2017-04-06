@@ -17,28 +17,20 @@ include ('inc/header.php');
 <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
 	<?php
 function validateCredentials($username, $pass) {
-	// echo "looking for username: [" . $username. "]";
-	// echo " with password: [" . $pass . "]";
 	$db = new Database();
 	$users = $db->getUsers();
 	
 	foreach ($users as $user){
-		// print_r($user);
-		// print_r("\n");
 		if($user["username"] == $username){
-			$hash = password_hash($pass);
-			if(password_verify($pass,$hash)){
+			$actualPassword = $user["password"];	
+			$verified = password_verify($pass, $actualPassword);
+			if($verified){
 				return true;		
 			}else{
-				echo '<pre class="bg-danger">';
-				echo 'passwords dont match';			
-				echo '</pre>';			
+				return false; 		
 			}
 		}
 	}
-	echo '<pre class="bg-danger">';
-	echo 'cannot find username';			
-	echo '</pre>';
 	return false;
 }
 
