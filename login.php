@@ -1,11 +1,14 @@
 <?php
+
+require_once "inc/page_setup.php";
+
 $pgTitle = "Log In";
-include ('header.php');
+include ('inc/header.php');
 ?>
 
 </head>
 
-<?php include ('nav.php'); ?>
+<?php include ('inc/nav.php'); ?>
 
 <!-- Start contents of main page here. -->
 
@@ -14,7 +17,7 @@ include ('header.php');
 	<?php
 function validateCredentials($user, $pass) {
 
-	if($user=="dcresc" and md5($pass)=="482c811da5d5b4bc6d497ffa98491e38")	{
+	if($user=="bmertz" and md5($pass)=="482c811da5d5b4bc6d497ffa98491e38")	{
 		return true;
 	}
 	else if($user=="bpowley" and md5($pass)=="aaa7d6afc57651e74da49e330a15041f") {
@@ -34,10 +37,11 @@ if (isset ( $_POST ['logout'] )) {
 }
 
 if($_SESSION['sessionUser'] != 'Guest'){?>
-
-	<p style="text-align: center">Logged in as <strong>  <?php  echo  $_SESSION["sessionUser"] ?></strong></p>
-	<p style="text-align: center">Logged in at: <?php  echo $_SESSION['startTime'] ?></p>
-				
+	<pre class="bg-success">
+		<p style="text-align: center">Logged in as <strong>  <?php  echo  $_SESSION["sessionUser"] ?></strong></p>
+		<p style="text-align: center">Logged in at: <?php  echo $_SESSION['startTime'] ?></p>
+	</pre>
+			
 	<div style="display: block; text-align: center">	
 		<form method="post" action="login.php">
 			 <input type="hidden" value="true" name="logout">
@@ -67,8 +71,10 @@ else {
 		}
 		else { ?>
 			<div style="display: block; text-align: center">
-			   <h2 style="color:red">Login Failed</h2>
-			   <p>Enter your credentials below. </p>
+				<pre class="bg-danger">
+			   	<h2>Login Failed</h2>
+			   </pre>
+			   <p>Please re-enter your credentials below. </p>
 			   <form method="post" action="login.php" >
 				  Username:    <input type="text" name="username"    size="30"><br/>
 				  Password&nbsp;: <input type="password" name="password" size="30"><br/>
@@ -101,4 +107,4 @@ else {
 
 
 <!-- End of contents -->
-<?php include('footer.php'); ?>
+<?php include('inc/footer.php'); ?>
