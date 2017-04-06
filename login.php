@@ -1,6 +1,7 @@
 <?php
 
 require_once "inc/page_setup.php";
+require_once "assets/passwordLib.php";
 
 $pgTitle = "Log In";
 include ('inc/header.php');
@@ -15,20 +16,30 @@ include ('inc/header.php');
 
 <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
 	<?php
-function validateCredentials($user, $pass) {
-
-	if($user=="bmertz" and md5($pass)=="482c811da5d5b4bc6d497ffa98491e38")	{
-		return true;
+function validateCredentials($username, $pass) {
+	// echo "looking for username: [" . $username. "]";
+	// echo " with password: [" . $pass . "]";
+	$db = new Database();
+	$users = $db->getUsers();
+	
+	foreach ($users as $user){
+		// print_r($user);
+		// print_r("\n");
+		if($user["username"] == $username){
+			$hash = password_hash($pass);
+			if(password_verify($pass,$hash)){
+				return true;		
+			}else{
+				echo '<pre class="bg-danger">';
+				echo 'passwords dont match';			
+				echo '</pre>';			
+			}
+		}
 	}
-	else if($user=="bpowley" and md5($pass)=="aaa7d6afc57651e74da49e330a15041f") {
-		return true;
-	}
-	else if($user=="ct310" and md5($pass)=="3aaec86181ee6974b99d893b4c1eb5b5") {
-		return true;
-	}
-	else {
-		return false;
-	}
+	echo '<pre class="bg-danger">';
+	echo 'cannot find username';			
+	echo '</pre>';
+	return false;
 }
 
 if (isset ( $_POST ['logout'] )) {
@@ -53,14 +64,16 @@ else {
 	if (isset($_POST['op'])) {
 		$username  = filter_var($_POST['username'], FILTER_SANITIZE_STRING);
 		$password  = filter_var($_POST['password'], FILTER_SANITIZE_STRING);
-
+		
 		if (validateCredentials($username, $password)){
 			$_SESSION["sessionUser"] = $username;
 			$_SESSION['startTime'] = date ( "l d, M. g:i a", time () ); ?>
+
+			<pre class="bg-success">
+				<p style="text-align: center">Logged in as <strong>  <?php  echo  $_SESSION["sessionUser"] ?></strong></p>
+				<p style="text-align: center">Logged in at: <?php  echo $_SESSION['startTime'] ?></p>
+			</pre>
 			
-			<p style="text-align: center">Logged in as <strong>  <?php  echo  $_SESSION["sessionUser"] ?></strong></p>
-			<p style="text-align: center">Logged in at: <?php  echo $_SESSION['startTime'] ?></p>
-				
 			<div style="display: block; text-align: center">	
 				<form method="post" action="login.php">
 					 <input type="hidden" value="true" name="logout">
@@ -96,6 +109,11 @@ else {
 				 <input type="hidden" value="done" name="op">
 				 <input type="submit" value="Send">
 			   </form>
+		   </div>
+		   
+		   <div style="display: block; text-align: center">
+		   	<br>
+				<p>Forgot Your Password? <a href="fmp.php">Click Here</a></p>
 		   </div>
 		<?php
 	}

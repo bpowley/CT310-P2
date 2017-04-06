@@ -1,4 +1,5 @@
 <?php
+require_once "inc/page_setup.php";
 $pgTitle = "About Us";
 include ('inc/header.php');
 ?>

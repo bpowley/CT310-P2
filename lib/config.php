@@ -10,7 +10,7 @@ class config {
 	public $site_lmod    = "04/05/17";
 	public $matience     = false;
 	public $session_name = "CT310-P2";
-	public $up_local     = "/s/bach/n/under/bpowley/public_html/CT310-P2/uploads/";
+	public $up_local     = "/s/bach/n/under/bpowley/public_html/CT310-P2/";
 	public $up_public    = "/s/bach/n/under/bpowley/public_html/CT310-P2/uploads/";
 	public $upload_dir   = ''; /* Selected below based upon server */
 	public $pad_length   = 6;
