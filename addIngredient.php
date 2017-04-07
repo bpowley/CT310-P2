@@ -56,15 +56,7 @@ if(isset($_POST["ingredient_name"])){
 <!-- Start contents of main page here. -->
 
 <div class="container col-xs-12">
-	<h3>Add Add Ingredient functionality here</h3>
-	<p>
-		need to write functionality to where you can enter fields into a text box to add an ingredient to the ingredients table in the ingredients database
-	</p>
-	
-	
-	
 				<form class="form-horizontal" method="post" enctype="multipart/form-data">
-					
 					<div class="form-group">
 						<label class="col-sm-2 control-label" for="ingredient_name">Ingredient Name</label>
 						<div class="col-sm-6">
@@ -78,9 +70,7 @@ if(isset($_POST["ingredient_name"])){
 							<input type="text" class="form-control" name="description" id="description"/>
 						</div>
 					</div>
-					
-					
-					
+
 					<div class="form-group">
 						<label class="col-sm-2 control-label" for="image">Upload an Image</label>
 						<div class="col-sm-6">
@@ -95,7 +85,6 @@ if(isset($_POST["ingredient_name"])){
 						</div>
 					</div>
 				</form>
-				
 </div>
 
 <!-- End of contents -->
