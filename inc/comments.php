@@ -23,7 +23,9 @@
 		</div>
 		
 		<div class="comment-section">
-			<p id="comments"></p>
+			<p id="comments">
+				<!-- this is where comments will display -->			
+			</p>
 		</div>
 		<?php if($_SESSION["sessionUser"] != 'Guest'){ ?>
 		<form class="form-inline" role="form">
