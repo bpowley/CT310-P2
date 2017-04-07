@@ -19,7 +19,7 @@ if ($_FILES && isset ( $_FILES ["image"] )) {
 				// if there is no file type, display an error message
 				$error_msg = "Unknown file type";
 			} else {
-				print_r($_FILES ["image"]);
+				// print_r($_FILES ["image"]);
 				$filename = $_FILES ["image"]["name"];
 				if (! file_exists ( $config->upload_dir )) {
 					if (! mkdir ( $config->upload_dir )) {
