@@ -24,11 +24,12 @@
 				<ul class="nav navbar-nav">
 					<li><a href="./index.php">Home</a></li>
 					<li><a href="./about.php">About Us</a></li>
-					<li><a href="./admin.php">Admin</a></li>
+					
 				</ul>
 
 				<ul class="nav navbar-nav navbar-right">
 					<li><a href="./shoppingCart.php"><span class="glyphicon glyphicon-shopping-cart"></span>Shopping Cart</a></li>
+					<li><a href="./admin.php"><span class="glyphicon glyphicon-user"></span>Admin</a></li>
 					<li><a href="./login.php"><span class="glyphicon glyphicon-log-in"></span> Login</a></li>
 				</ul>
 
