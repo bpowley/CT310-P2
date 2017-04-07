@@ -33,7 +33,7 @@ include ('inc/nav.php');
 			<div class="col-xs-12">
 				<h3> <a href="viewIngredient.php?i=<?php echo $ingredient["ingredient_name"]?>"><?php echo $ingredient["ingredient_name"]?></a>:</h3>
 				<!--<p>DESCRIPTION: <i> <?php //echo $ingredient["description"]?></i></p>-->
-				<img class="img-circle" style="height: 200px; width: 200px; margin-bottom: 5px;" src="assets/img/<?php echo $ingredient["image_name"];?>" alt="<?php echo $ingredient["ingredient_name"];?>" />
+				<a href="viewIngredient.php?i=<?php echo $ingredient["ingredient_name"]?>"><img class="img-circle" style="height: 200px; width: 200px; margin-bottom: 5px;" src="assets/img/<?php echo $ingredient["image_name"];?>" alt="<?php echo $ingredient["ingredient_name"];?>" /></a>
 
 			</div>
 		</div>
