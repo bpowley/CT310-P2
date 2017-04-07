@@ -9,8 +9,10 @@ class Database extends PDO {
 	}
 
 	public function getNoOfIngredients(){
-		$ing_num = $this->query("SELECT count(*) FROM images");
-		return $ing_num->fetchColumn();
+		$ing_num = $this->query("SELECT count(*) FROM ingredients");
+		$num = $ing_num->fetchColumn();
+		echo "there are: '$num' ingredients in the ingredients table!!!!!!";
+		return $num;
 	}
 
 	public function getImage($name){
@@ -40,6 +42,20 @@ class Database extends PDO {
   	public function getUsers(){
   		$sql = "SELECT * FROM users";
   		return $this->query($sql);
+  	}
+  	
+  	public function addIngredient($name, $img, $dsc){
+  		echo ' ------- now in addIngredient() -------------';
+  		$lastID = $this->getNoOfIngredients();
+ 		$newID = $lastID + 1;
+		$sql = "INSERT INTO ingredients (id, ingredient_name, image_name, description) VALUES ('$newID','$name','$img','$dsc')";
+		echo $sql;
+		if(!$this->exec($sql)){
+			echo '<pre class="bg-danger">';
+			print_r($this->errorInfo());
+			echo '</pre>';		
+		}
+		  	
   	}
 }
 // create necessary database functions
