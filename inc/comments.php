@@ -1,4 +1,4 @@
-<?php if($_SESSION["sessionUser"] != 'Guest'){ ?>
+
 	<script>
 		function addComment() {
 			if(document.getElementById("input").value == "")
@@ -23,9 +23,11 @@
 		</div>
 		
 		<div class="comment-section">
-			<p id="comments"></p>
+			<p id="comments">
+				<!-- this is where comments will display -->			
+			</p>
 		</div>
-		
+		<?php if($_SESSION["sessionUser"] != 'Guest'){ ?>
 		<form class="form-inline" role="form">
 		
 			<div class="form-group">
@@ -41,4 +43,5 @@
 <?php }else { ?>
 	<br/>
 	<p style="text-align: center"> <small>[You must log in to leave a comment] </small></p>
+	</div>
 <?php } ?>
