@@ -5,7 +5,6 @@ require_once "inc/page_setup.php";
 $pgTitle = "shoppingCart";
 include ('inc/header.php');
 $db = new Database();
-$_SESSION['shoppingCart'];
 ?>
 
 </head>
@@ -27,8 +26,8 @@ function sendEmail($db) {
 	$admins->execute();
 	
 	$msgBody = "An order has been placed for the following items: " . $contents;
-	foreach ($admins as $a)
-		mail($a['email'], "Shopping Cart", $msgBody);
+	/*foreach ($admins as $a)
+		mail($a['email'], "Shopping Cart", $msgBody);*/
 		
 	$sql = "SELECT email FROM users WHERE username='" . $_SESSION['sessionUser'] . "'";
 	$email = $db->prepare($sql);
@@ -46,6 +45,10 @@ function sendEmail($db) {
 	<div class="container col-xs-12">
 		<div align="center">
 			<?php
+				if (!isset($_SESSION['shoppingCart'])) {
+					$_SESSION['shoppingCart'] = array();
+				}
+				
 				if(isset($_GET['i'])){
 					array_push($_SESSION['shoppingCart'], $_GET['i']);
 				}
