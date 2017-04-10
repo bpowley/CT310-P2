@@ -43,7 +43,7 @@ function check_user($users, $name) {
 function send_email($destination, $user){
 	$salt = "498#2D83B631%3800EBD!801600D*7E3CC13";
     $password = hash('sha512', $salt.$destination);
-    $pwrurl = "www.cs.colostate.edu/~benmertz/project02/reset_psw.php?q=".$password."&a=".$user;
+    $pwrurl = "www.cs.colostate.edu/~bpowley/CT310-P2/reset_psw.php?q=".$password."&a=".$user;
         
     $mailbody = "Dear user,\n\nIt appears that you have requested a password reset\n\nTo reset your password, please click the link below. If you cannot click it, please paste it into your web browser's address bar.\n\n" . $pwrurl;
 

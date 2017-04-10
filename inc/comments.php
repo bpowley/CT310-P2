@@ -55,7 +55,7 @@ $ingredients = $db->getIngredients();
 		// print_r($comment_col2->fetch());
 
 		foreach ($comment_col2 as $c) {
-			echo "\"" . $c['comment_text'] . "\" - <strong>" . $c['username'] . "</strong>  @: " . $c['timestamp'] . "<br><br>";
+			echo "\"" . $c['comment_text'] . "\" - <strong>" . $c['username'] . "</strong><br><br>";
 		}
 	}
 	?>
