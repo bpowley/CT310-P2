@@ -24,14 +24,14 @@ include ('inc/header.php');
 			<h2>Ben Mertz</h2>
 			<img src="assets/img/ben.jpg" class="img-circle center-block avatar" alt="bm" width="280" height="290">
 			<p style="text-align: center;">
-				DESCRIPTION ABOUT BEN
+				Ben is a junior at CSU studying applied computing technology. His interests are skiing, biking, and boating.
 			</p>
 		</div>
 		<div class="col-sm-6">
 			<h2>Brendon Powley</h2>
 			<img src="assets/img/brendon.jpg" class="img-circle center-block avatar" alt="bp" width="280" height="290">
 			<p style="text-align: center;">
-				Brendon is a junior at CSU studying applied computing technology. his interests include sports, music, and biking.
+				Brendon is a junior at CSU studying applied computing technology. His interests include sports, music, and biking.
 			</p>
 		</div>
 	</div>

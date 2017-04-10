@@ -1,21 +1,57 @@
+<head>
+<?php
+require_once "inc/page_setup.php";
 
-	<script>
-		function addComment() {
-			if(document.getElementById("input").value == "")
-			{
-				return;
-			}
-			var comment = document.getElementById("input").value;
-			//This regular expression removes html tags from the user input
-			comment = comment.replace(/<(?:.|\n)*?>/gm, '');
-			var name = document.getElementById("displayName").innerHTML;
-			var d = new Date();
-			var date = (d.getMonth() + 1)+ "/" + d.getDate();
-			document.getElementById("comments").innerHTML += "\"" + comment +"\" - <strong>" + name + "</strong> on " + date +"<br/><br/>";
-			document.getElementById("input").value = "";
+$db = new Database();
+$users = $db->getUsers();
+$comments = $db->getComments();	
+$ingredients = $db->getIngredients();
+?>
+</head>
+	<?php
+	function addCommentToDB($cmt, $ingredients, $db) {
+		$ingID = getIngredientID($_GET['i'], $ingredients);
+		$user = $_SESSION['sessionUser'];
+		$timeStamp = date("h:i:s");
+		$ip = $_SERVER['REMOTE_ADDR'];
+		$add = true;
+		
+		
+		$comments = $db->getComments();
+
+		if (strcmp($cmt, "") == 0)
+			$add = false;
+		
+		if ($add) {
+			global $db;
+			$sql = "INSERT INTO comments (ing_id, comment_text, user_id, timestamp, originating_ip) VALUES ('$ingID', '$cmt', '$user', '$timeStamp', '$ip')";
+			$db->exec($sql);
 		}
-	</script>
+	}
+	
+	function getIngredientID($ingredient, $ingredients) {
+		foreach ($ingredients as $i) {
+			if (strcmp($ingredient, $i['ingredient_name']) == 0)
+				return $i['id'];
+		}
+	}
+	
+	function showComments($db, $ingredients) {
+		$sql = "SELECT id FROM ingredients WHERE ingredient_name='" . $_GET['i'] . "'";
+		$id = $db->prepare($sql);
+		$id->execute();
+		$id = $id->fetch();
+		$newID = $id['id'];
+		
+		$sql = "SELECT * FROM comments WHERE ing_id='$newID'";
+		$comment_col = $db->prepare($sql);
+		$comment_col->execute();
 
+		foreach ($comment_col as $c) {
+			echo "\"" . $c['comment_text'] . "\" - <strong>" . $c['user_id'] . "</strong>  @: " . $c['timestamp'] . "<br><br>";
+		}
+	}
+	?>
 	<div class="comment-box rounded">
 	
 		<div class="title-box">
@@ -24,20 +60,24 @@
 		
 		<div class="comment-section">
 			<p id="comments">
-				<!-- this is where comments will display -->			
+				<!-- this is where comments will display -->	
+				<?php
+					if (isset($_POST['cmt']))
+					{
+						addCommentToDB($_POST['cmt'], $ingredients, $db);
+						showComments($db, $ingredients);
+					}
+					else
+						showComments($db, $ingredients);
+				?>
 			</p>
 		</div>
 		<?php if($_SESSION["sessionUser"] != 'Guest'){ ?>
-		<form class="form-inline" role="form">
-		
-			<div class="form-group">
-				<input id="input" class="form-control" type="text" placeholder="Your Comments" />
+		<form action="#" method="POST">
+			<div align="center">
+				<input type="text" name="cmt"><br>
+				<input type="submit" value="Add Comment">
 			</div>
-			
-			<div class="form-group">
-				<input type="button" value="Add Comment" onclick="addComment()" />
-			</div>
-			
 		</form>
 	</div>
 <?php }else { ?>
