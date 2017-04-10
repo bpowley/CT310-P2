@@ -32,6 +32,7 @@ $userRole = $user['role'];
 		<h2>You have administrator priveleges. You may: </h2>
 		<ul>
 			<h5><li><a href="./addIngredient.php">Add an Ingredient</a></li></h5>
+			<h5><li><a href="./editComments.php">Modify Ingredient Comments</a></li></h5>
 			<h5><li><a href="./createDB.php">Reset the site to the Default Database</a></li></h5>		
 		</ul>
 		</div>
