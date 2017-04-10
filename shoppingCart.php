@@ -5,7 +5,7 @@ require_once "inc/page_setup.php";
 $pgTitle = "shoppingCart";
 include ('inc/header.php');
 $db = new Database();
-
+$_SESSION['shoppingCart'];
 ?>
 
 </head>
@@ -42,31 +42,35 @@ function sendEmail($db) {
 }
 ?>
 <!-- Start contents of main page here. -->
-
-<div class="container col-xs-12">
-	<div align="center">
-		<?php
-			if(isset($_GET['i'])){
-				array_push($_SESSION['shoppingCart'], $_GET['i']);
-			}
+<?php if (strcmp($_SESSION ['sessionUser'], "Guest") != 0) :?>
+	<div class="container col-xs-12">
+		<div align="center">
+			<?php
+				if(isset($_GET['i'])){
+					array_push($_SESSION['shoppingCart'], $_GET['i']);
+				}
 			
-			echo "<h3>Shopping Cart:</h3>";
-			$count = 1;
-			foreach($_SESSION['shoppingCart'] as $t) {
-				echo "$count: <strong>$t</strong><br>";
-				$count = $count + 1;
-			}
-		?>
-		<?php
-			if(isset($_POST['submit']))
-				sendEmail($db);
-		?>
-		<form action="./shoppingCart.php" method="POST">
-			<input type="submit" name="submit" value="Checkout">
-		</form>
+				echo "<h3>Shopping Cart:</h3>";
+				$count = 1;
+				foreach($_SESSION['shoppingCart'] as $t) {
+					echo "$count: <strong>$t</strong><br>";
+					$count = $count + 1;
+				}
+			?>
+			<?php
+				if(isset($_POST['submit']))
+					sendEmail($db);
+			?>
+			<form action="./shoppingCart.php" method="POST">
+				<input type="submit" name="submit" value="Checkout">
+			</form>
+		</div>
 	</div>
-</div>
-
+<?php else: ?>
+	<div align="center">
+		<h4>Must be logged in to view cart</h4>
+	</div>
+<?php endif; ?>
 <!-- End of contents -->
 
 <?php include('inc/footer.php'); ?>
