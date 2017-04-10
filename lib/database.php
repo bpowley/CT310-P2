@@ -42,12 +42,57 @@ class Database extends PDO {
   		$sql = "SELECT * FROM users";
   		return $this->query($sql);
   	}
-	
-	public function getComments(){
+
+	  public function getComments(){
   		$sql = "SELECT * FROM comments";
   		return $this->query($sql);
-  	}
-  	
+    }
+
+    public function getCommentDetails($id){
+      //echo "getCommentDetails($id): ";
+      $sql = "SELECT * FROM comments WHERE id='$id'";
+      $result = $this->query($sql);
+      if($result === FALSE){
+        echo $sql;
+        echo '<pre class="bg-danger">';
+        print_r ( $this->errorInfo () );
+        echo '</pre>';
+        return NULL;
+      }
+      return $result->fetch();
+    }
+
+    public function getUserID($username){
+      $sql = "SELECT id FROM users WHERE username = '$username'";
+      $result = $this->query($sql);
+      if($result === FALSE){
+        echo $sql;
+        echo '<pre class="bg-danger">';
+        print_r ( $this->errorInfo () );
+        echo '</pre>';
+        return NULL;
+      }
+      return $result->fetch();
+    }
+
+    public function updateComment($comment){
+      $sql = "UPDATE comments SET ing_id = :ing_id, comment_text = :comment_text,
+                user_id = :user_id, timestamp = :timestamp, originating_ip = :originating_ip
+                WHERE id = :id";
+
+      $stm = $this->prepare($sql);
+      return $stm->execute(array(
+        ":ing_id" => $comment->ing_id,
+        ":comment_text" => $comment->comment_text,
+        ":user_id" => $comment->user_id,
+        ":timestamp" => $comment->timestamp,
+        ":originating_ip" => $comment->originating_ip,
+        ":id" => $comment->id
+      ));
+
+    }
+
+
   	public function addIngredient($name, $img, $dsc){
   		$lastID = $this->getNoOfIngredients();
  		$newID = $lastID + 1;
@@ -55,9 +100,9 @@ class Database extends PDO {
 		if(!$this->exec($sql)){
 			echo '<pre class="bg-danger">';
 			print_r($this->errorInfo());
-			echo '</pre>';		
+			echo '</pre>';
 		}
-		  	
+
   	}
 }
 // create necessary database functions

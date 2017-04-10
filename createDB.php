@@ -25,7 +25,7 @@ include ('inc/header.php');
 		</div>
 	</div>
 	<div class="row">
-	
+
 		<div class="col-xs-12">
 			<ol>
 				<li>Start a connection
@@ -34,12 +34,12 @@ include ('inc/header.php');
 				<li> Delete old ingredients, users, and comments tables.
 					<?php dropTableByName("ingredients");
 							dropTableByName("users");
-							dropTableByName("comments");?>				
+							dropTableByName("comments");?>
 				</li>
 				<li>Create Tables. Ingredients then Users then Comments.
 					<?php createTableIngredients();
 							createTableUsers();
-							createTableComments();?>									
+							createTableComments();?>
 				</li>
 				<li>Adding in default Ingredients, Users, and Comments.
 					<?php addDefaultUsers();
@@ -111,7 +111,7 @@ function createTableComments(){
 					timestamp varchar(15),
 					originating_ip varchar(10),
 					FOREIGN KEY (ing_id) REFERENCES ingredients(id),
-					FOREIGN KEY (user_id) REFERENCES uesrs(id))";	
+					FOREIGN KEY (user_id) REFERENCES uesrs(id))";
 	createTableGeneric($sql);
 }
 
@@ -130,12 +130,12 @@ function createTableGeneric($sql) {
 }
 
 function addDefaultIngredients(){
-	testedIngredientInsert(1, "Kale", "kale.jpg", "Kale is the nastiest shit, how anyone can ruin smoothies with this terrible ingredient is beyond me.");
-	testedIngredientInsert(2,"Green Beans","greenbeans.jpg","These fresh green beans are a great source of fiber, antioxidants and vitamins.
+	//testedIngredientInsert(1, "Kale", "kale.jpg", "Kale is the nastiest shit, how anyone can ruin smoothies with this terrible ingredient is beyond me.");
+	testedIngredientInsert(1,"Green Beans","greenbeans.jpg","These fresh green beans are a great source of fiber, antioxidants and vitamins.
 		Steam them, fry them, or bake them in a casserole for a tasty, healthy treat!");
-	testedIngredientInsert(3, "Mint","mint.jpg","Use these fresh leaves to add a minty flavor to your tea or candy, or as a natural breath freshener.
+	testedIngredientInsert(2, "Mint","mint.jpg","Use these fresh leaves to add a minty flavor to your tea or candy, or as a natural breath freshener.
 		These leaves can also be used to add a pleasant aroma to any room.");
-	testedIngredientInsert(4,"Oregano","oregano.jpg","This herb is part of the mint family. Order fresh leaves to use now or let them dry out for more intense flavor!
+	testedIngredientInsert(3,"Oregano","oregano.jpg","This herb is part of the mint family. Order fresh leaves to use now or let them dry out for more intense flavor!
 		Oregano is wildly used Italian-American and Mediterranean cuisine.");
 }
 
@@ -144,7 +144,7 @@ function testedIngredientInsert($id, $ing_name, $img_name, $desc){
 	$sql = "INSERT INTO ingredients(id, ingredient_name, image_name, description) VALUES ( '$id', '$ing_name', '$img_name', '$desc')";
 	$status = $dbh->exec($sql);
 	if($status === FALSE){
-		echo '<pre class="bg-danger">';	
+		echo '<pre class="bg-danger">';
 		print_r ( $dbh->errorInfo () );
       echo '</pre>';
    } else {
@@ -157,16 +157,17 @@ function testedIngredientInsert($id, $ing_name, $img_name, $desc){
 function addDefaultUsers(){
 	testedUserInsert(1, "bpowley", "password","brendon.powley@gmail.com",1);
 	testedUserInsert(2, "benmertz", "password","bn.mertz@gmail.com", 1);
-	testedUserInsert(3, "ct310", "password", "ct310@cs.colostate.edu", 0);
+	testedUserInsert(3, "ct310", "password", "ct310@cs.colostate.edu", 1);
+	testedUserInsert(4, "ct310", "password", "ct310@cs.colostate.edu", 0);
 }
 
 function testedUserInsert($id, $username, $password, $mail, $role){
-	global $dbh; 
+	global $dbh;
 	$hash = password_hash($password);
 	$sql = "INSERT INTO users(id, username, password, email, role) VALUES ( '$id', '$username', '$hash', '$mail', '$role')";
 	$status = $dbh->exec($sql);
 	if($status === FALSE){
-		echo '<pre class="bg-danger">';	
+		echo '<pre class="bg-danger">';
 		print_r ( $dbh->errorInfo () );
       echo '</pre>';
    } else {
@@ -174,22 +175,23 @@ function testedUserInsert($id, $username, $password, $mail, $role){
       echo 'Number of rows effected: ' . $status;
       echo '</pre>';
    }
-	
+
 }
 
 function addDefaultComment(){
-	$unixTime = time() + (7 * 24 * 60 * 60);
+	//$unixTime = time() + (7 * 24 * 60 * 60);
+	$unixTime = date("h:i:s");
 	// echo 'now: ' . date('Y-m-d') . "\n";
 
 	if(!empty($_SERVER['HTTP_CLIENT_IP'])){
-		$ip = $_SERVER['HTTP_CLIENT_IP'];	
+		$ip = $_SERVER['HTTP_CLIENT_IP'];
 	}else if(!empty($_SERVER['HTTP_X_FORWARDED_FOR'])) {
-		$ip = $_SERVER['HTTP_X_FORWARDED_FOR'];	
+		$ip = $_SERVER['HTTP_X_FORWARDED_FOR'];
 	}else{
-		$ip = $_SERVER['REMOTE_ADDR'];	
+		$ip = $_SERVER['REMOTE_ADDR'];
 	}
-	
-	testedCommentInsert(1, 1, "I agree. Kale sux.", 1, $unixTime, $ip);
+
+	testedCommentInsert(1, 1, "I used to dislike green beans, but now I enjoy them!", 1, $unixTime, $ip);
 }
 
 function testedCommentInsert($id, $iID, $comment, $uID, $time, $oIP){
@@ -197,7 +199,7 @@ function testedCommentInsert($id, $iID, $comment, $uID, $time, $oIP){
 	$sql = "INSERT INTO comments(id, ing_id, comment_text, user_id, timestamp, originating_ip) VALUES ( '$id', '$iID', '$comment', '$uID', '$time', '$oIP')";
 	$status = $dbh->exec($sql);
 	if($status === FALSE){
-		echo '<pre class="bg-danger">';	
+		echo '<pre class="bg-danger">';
 		print_r ( $dbh->errorInfo () );
       echo '</pre>';
    } else {

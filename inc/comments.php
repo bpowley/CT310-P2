@@ -4,63 +4,70 @@ require_once "inc/page_setup.php";
 
 $db = new Database();
 $users = $db->getUsers();
-$comments = $db->getComments();	
+$comments = $db->getComments();
 $ingredients = $db->getIngredients();
 ?>
 </head>
 	<?php
 	function addCommentToDB($cmt, $ingredients, $db) {
 		$ingID = getIngredientID($_GET['i'], $ingredients);
-		$user = $_SESSION['sessionUser'];
+		$username = $_SESSION['sessionUser'];
+		$userID = $db->getUserID($username);
+		$new_userID = $userID['id'];
+		// echo 'new_userID: [' . $new_userID . ']';
 		$timeStamp = date("h:i:s");
 		$ip = $_SERVER['REMOTE_ADDR'];
 		$add = true;
-		
-		
+
+
 		$comments = $db->getComments();
 
 		if (strcmp($cmt, "") == 0)
 			$add = false;
-		
+
 		if ($add) {
 			global $db;
-			$sql = "INSERT INTO comments (ing_id, comment_text, user_id, timestamp, originating_ip) VALUES ('$ingID', '$cmt', '$user', '$timeStamp', '$ip')";
+			$sql = "INSERT INTO comments (ing_id, comment_text, user_id, timestamp, originating_ip) VALUES ('$ingID', '$cmt', '$new_userID', '$timeStamp', '$ip')";
 			$db->exec($sql);
 		}
 	}
-	
+
 	function getIngredientID($ingredient, $ingredients) {
 		foreach ($ingredients as $i) {
 			if (strcmp($ingredient, $i['ingredient_name']) == 0)
 				return $i['id'];
 		}
 	}
-	
+
 	function showComments($db, $ingredients) {
 		$sql = "SELECT id FROM ingredients WHERE ingredient_name='" . $_GET['i'] . "'";
 		$id = $db->prepare($sql);
 		$id->execute();
 		$id = $id->fetch();
 		$newID = $id['id'];
-		
-		$sql = "SELECT * FROM comments WHERE ing_id='$newID'";
-		$comment_col = $db->prepare($sql);
-		$comment_col->execute();
 
-		foreach ($comment_col as $c) {
-			echo "\"" . $c['comment_text'] . "\" - <strong>" . $c['user_id'] . "</strong>  @: " . $c['timestamp'] . "<br><br>";
+		$sql2 = "SELECT comment_text, username, timestamp
+							FROM comments AS c JOIN users AS u
+							ON c.user_id = u.id
+							WHERE ing_id = '$newID'";
+		$comment_col2 = $db->prepare($sql2);
+		$comment_col2->execute();
+		// print_r($comment_col2->fetch());
+
+		foreach ($comment_col2 as $c) {
+			echo "\"" . $c['comment_text'] . "\" - <strong>" . $c['username'] . "</strong>  @: " . $c['timestamp'] . "<br><br>";
 		}
 	}
 	?>
 	<div class="comment-box rounded">
-	
+
 		<div class="title-box">
 			<h4>Comments</h4>
 		</div>
-		
+
 		<div class="comment-section">
 			<p id="comments">
-				<!-- this is where comments will display -->	
+				<!-- this is where comments will display -->
 				<?php
 					if (isset($_POST['cmt']))
 					{

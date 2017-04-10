@@ -39,6 +39,6 @@ include ('inc/nav.php');
 		</div>
 	<?php }; // end the foreach loop ?>
 </div>
-<!--  -->
+
 <!-- End of contents -->
 <?php include('inc/footer.php'); ?>
