@@ -24,10 +24,6 @@ $ingredient = $db->getIngredientDetails($displayIngredient);
 		<?php echo $ingredient->description;?>
 	</p>
 	<?php include('inc/comments.php'); ?>
-	
-	<form action="./shoppingCart?i=<?php echo $_GET["i"]; ?>" method="POST">
-		<input type="submit" name="addCart" value="Add To Cart">
-	</form>
 </div>
 
 <div class="col-lg-4 col-md-4 col-sm-6 col-xs-6">
