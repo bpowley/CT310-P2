@@ -42,6 +42,11 @@ class Database extends PDO {
   		$sql = "SELECT * FROM users";
   		return $this->query($sql);
   	}
+	
+	public function getComments(){
+  		$sql = "SELECT * FROM comments";
+  		return $this->query($sql);
+  	}
   	
   	public function addIngredient($name, $img, $dsc){
   		$lastID = $this->getNoOfIngredients();
