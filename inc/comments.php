@@ -78,6 +78,9 @@ $ingredients = $db->getIngredients();
 				<input type="text" name="cmt"><br>
 				<input type="submit" value="Add Comment">
 			</div>
+		</form><br>
+		<form align="center" action="./shoppingCart?i=<?php echo $_GET["i"]; ?>" method="POST">
+			<input type="submit" name="addCart" value="Add To Cart">
 		</form>
 	</div>
 <?php }else { ?>
