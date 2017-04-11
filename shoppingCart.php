@@ -50,13 +50,25 @@ function sendEmail($db) {
 				}
 				
 				if(isset($_GET['i'])){
-					array_push($_SESSION['shoppingCart'], $_GET['i']);
+					if (array_search($_GET['i'], $_SESSION['shoppingCart']) == FALSE) {
+						array_push($_SESSION['shoppingCart'], $_GET['i']);
+					}
 				}
 			
 				echo "<h3>Shopping Cart:</h3>";
 				$count = 1;
 				foreach($_SESSION['shoppingCart'] as $t) {
-					echo "$count: <strong>$t</strong><br>";
+					if (isset($_POST[$t])){
+						$index = array_search($t, $_SESSION['shoppingCart']);
+						$cart = $_SESSION['shoppingCart'];
+						unset($cart[$index]);
+						$_SESSION['shoppingCart'] = array_values($cart);
+						header ("Location: ./shoppingCart.php");
+					}
+					echo "<form action='./shoppingCart.php' method='POST'>
+						$count: <strong>$t</strong>
+						<input type='submit' name=$t value='Remove'>
+					</form><br>";
 					$count = $count + 1;
 				}
 			?>
